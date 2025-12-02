@@ -37,6 +37,7 @@ cd ..
 
 ```bash
 cd rails-app
+bin/rails db:migrate
 bin/dev
 ```
 
