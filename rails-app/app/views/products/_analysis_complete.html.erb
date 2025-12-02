@@ -1,0 +1,41 @@
+<div id="product-analysis" class="space-y-4">
+  <!-- Title -->
+  <h1 class="text-2xl font-bold mb-6"><%= product.title %></h1>
+
+  <!-- Success Badge -->
+  <div class="flex items-center gap-2 bg-green-50 p-3 rounded-lg border border-green-200">
+    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+    </svg>
+    <span class="text-sm font-semibold text-green-900">Analysis Complete</span>
+  </div>
+
+  <!-- Results Card -->
+  <div class="space-y-4 bg-gradient-to-br from-green-50 to-white p-5 rounded-lg border border-green-200 shadow-sm">
+    <!-- Taxonomy Section -->
+    <div>
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-wide mb-2">📦 Taxonomy</p>
+      <p class="font-bold text-lg text-gray-900"><%= product.taxonomy %></p>
+    </div>
+
+    <!-- Description Section -->
+    <div class="border-t border-green-100 pt-4">
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-wide mb-2">📝 Description</p>
+      <p class="text-gray-700 leading-relaxed"><%= product.description %></p>
+    </div>
+
+    <!-- Violations Section (if any) -->
+    <% if product.violations.present? && product.violations != {} %>
+      <div class="border-t border-green-100 pt-4 bg-yellow-50 p-3 rounded">
+        <p class="text-xs font-mono text-gray-600 uppercase tracking-wide mb-2">⚠️ Violations Detected</p>
+        <pre class="text-xs text-gray-700 overflow-auto max-h-32 font-mono"><%= JSON.pretty_generate(product.violations) rescue product.violations.inspect %></pre>
+      </div>
+    <% end %>
+
+    <!-- Analysis Metadata -->
+    <div class="border-t border-green-100 pt-3 mt-4">
+      <p class="text-xs text-gray-500">Analyzed at <%= product.updated_at.strftime('%B %d, %Y at %I:%M %p') %></p>
+    </div>
+  </div>
+</div>
+

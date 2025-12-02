@@ -1,0 +1,9 @@
+<div id="product-analysis">
+  <% if product.complete? %>
+    <%= render "analysis_complete", product: product %>
+  <% elsif product.failed? %>
+    <%= render "analysis_failed", product: product %>
+  <% else %>
+    <%= render "analysis_loading", product: product %>
+  <% end %>
+</div>

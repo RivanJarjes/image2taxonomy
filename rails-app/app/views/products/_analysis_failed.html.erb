@@ -1,0 +1,43 @@
+<div id="product-analysis" class="space-y-4">
+  <!-- Title -->
+  <h1 class="text-2xl font-bold mb-6"><%= product.title || "Analysis Failed" %></h1>
+
+  <!-- Error Badge -->
+  <div class="flex items-center gap-2 bg-red-50 p-3 rounded-lg border border-red-200">
+    <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+    </svg>
+    <span class="text-sm font-semibold text-red-900">Analysis Failed</span>
+  </div>
+
+  <!-- Error Details Card -->
+  <div class="space-y-4 bg-gradient-to-br from-red-50 to-white p-5 rounded-lg border border-red-200 shadow-sm">
+    <!-- Error Message -->
+    <div>
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-wide mb-2">❌ Error</p>
+      <p class="text-red-700 leading-relaxed">
+        <% if product.error_message.present? %>
+          <%= product.error_message %>
+        <% else %>
+          The AI service encountered an error while analyzing this product. Please try again.
+        <% end %>
+      </p>
+    </div>
+
+    <!-- Retry Information -->
+    <div class="border-t border-red-100 pt-4 bg-yellow-50 p-3 rounded">
+      <p class="text-xs font-mono text-gray-600 uppercase tracking-wide mb-2">ℹ️ What to do</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>Check that the image is clear and shows the main product</li>
+        <li>Try uploading a different product image</li>
+        <li>The AI service may be temporarily unavailable - try again shortly</li>
+      </ul>
+    </div>
+
+    <!-- Failure Metadata -->
+    <div class="border-t border-red-100 pt-3 mt-4">
+      <p class="text-xs text-gray-500">Failed at <%= product.updated_at.strftime('%B %d, %Y at %I:%M %p') %></p>
+    </div>
+  </div>
+</div>
+

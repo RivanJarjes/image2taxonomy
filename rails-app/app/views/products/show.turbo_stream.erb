@@ -1,0 +1,10 @@
+<%= turbo_stream.replace "product-analysis" do %>
+  <% if @product.complete? %>
+    <%= render "analysis_complete", product: @product %>
+    <div id="complete-flag" class="hidden"></div>
+  <% elsif @product.failed? %>
+    <%= render "analysis_failed", product: @product %>
+  <% else %>
+    <%= render "analysis_loading", product: @product %>
+  <% end %>
+<% end %>
