@@ -1,0 +1,1580 @@
+root ::= "{" ws "\"title\":" ws string ws "," ws "\"description\":" ws string ws "," ws "\"taxonomy\":" ws taxonomy ws "}"
+ws ::= [ \t\n\r]*
+string ::= "\"" char* "\""
+char ::= [^"\\] | "\\" ["\\/bfnrt]
+seperator ::= " > "
+taxonomy ::= "\"" taxonomy-inner "\""
+taxonomy-inner ::= "Apparel & Accessories" (seperator taxonomy-apparel-accessories-children)
+
+taxonomy-apparel-accessories-children ::= (
+	taxonomy-clothing | 
+	taxonomy-clothing-accessories | 
+	taxonomy-costumes-accessories | 
+	taxonomy-handbag-wallet-accessories | 
+	taxonomy-handbags-wallets-cases | 
+	taxonomy-jewelry | 
+	taxonomy-shoe-accessories | 
+	taxonomy-shoes
+)
+
+taxonomy-clothing ::= "Clothing" (seperator taxonomy-clothing-children)? 
+
+taxonomy-clothing-children ::= (
+	taxonomy-activewear | 
+	taxonomy-baby-toddler-clothing | 
+	taxonomy-boys-underwear | 
+	taxonomy-clothing-tops | 
+	taxonomy-dresses | 
+	taxonomy-girls-underwear | 
+	taxonomy-lingerie | 
+	taxonomy-maternity-clothing | 
+	taxonomy-men-s-undergarments | 
+	taxonomy-one-pieces | 
+	taxonomy-outerwear | 
+	taxonomy-outfit-sets | 
+	taxonomy-pants | 
+	taxonomy-shorts | 
+	taxonomy-skirts | 
+	taxonomy-skorts | 
+	taxonomy-sleepwear-loungewear | 
+	taxonomy-socks | 
+	taxonomy-suits | 
+	taxonomy-swimwear | 
+	taxonomy-traditional-ceremonial-clothing | 
+	taxonomy-uniforms-workwear | 
+	taxonomy-wedding-bridal-party-dresses
+)
+
+taxonomy-activewear ::= "Activewear" (seperator taxonomy-activewear-children)? 
+
+taxonomy-activewear-children ::= (
+	taxonomy-activewear-pants | 
+	taxonomy-activewear-sweatshirts-hoodies | 
+	taxonomy-activewear-tops | 
+	taxonomy-activewear-vests-jackets | 
+	taxonomy-boxing-shorts | 
+	taxonomy-dance-dresses-skirts-costumes | 
+	taxonomy-leotards-unitards | 
+	taxonomy-sports-bras
+)
+
+taxonomy-activewear-pants ::= "Activewear Pants" (seperator taxonomy-activewear-pants-children)? 
+
+taxonomy-activewear-pants-children ::= (
+	taxonomy-joggers | 
+	taxonomy-leggings | 
+	taxonomy-shorts | 
+	taxonomy-sweatpants | 
+	taxonomy-tights | 
+	taxonomy-track-pants | 
+	taxonomy-training-pants | 
+	taxonomy-wind-pants
+)
+
+taxonomy-joggers ::= "Joggers" 
+
+taxonomy-leggings ::= "Leggings" 
+
+taxonomy-shorts ::= "Shorts" 
+
+taxonomy-sweatpants ::= "Sweatpants" 
+
+taxonomy-tights ::= "Tights" 
+
+taxonomy-track-pants ::= "Track Pants" 
+
+taxonomy-training-pants ::= "Training Pants" 
+
+taxonomy-wind-pants ::= "Wind Pants" 
+
+taxonomy-activewear-sweatshirts-hoodies ::= "Activewear Sweatshirts & Hoodies" (seperator taxonomy-activewear-sweatshirts-hoodies-children)? 
+
+taxonomy-activewear-sweatshirts-hoodies-children ::= (
+	taxonomy-hoodies | 
+	taxonomy-sweatshirts | 
+	taxonomy-track-jackets
+)
+
+taxonomy-hoodies ::= "Hoodies" 
+
+taxonomy-sweatshirts ::= "Sweatshirts" 
+
+taxonomy-track-jackets ::= "Track Jackets" 
+
+taxonomy-activewear-tops ::= "Activewear Tops" (seperator taxonomy-activewear-tops-children)? 
+
+taxonomy-activewear-tops-children ::= (
+	taxonomy-crop-tops | 
+	taxonomy-t-shirts | 
+	taxonomy-tank-tops
+)
+
+taxonomy-crop-tops ::= "Crop Tops" 
+
+taxonomy-t-shirts ::= "T-Shirts" 
+
+taxonomy-tank-tops ::= "Tank Tops" 
+
+taxonomy-activewear-vests-jackets ::= "Activewear Vests & Jackets" (seperator taxonomy-activewear-vests-jackets-children)? 
+
+taxonomy-activewear-vests-jackets-children ::= (
+	taxonomy-jackets | 
+	taxonomy-vests
+)
+
+taxonomy-jackets ::= "Jackets" 
+
+taxonomy-vests ::= "Vests" 
+
+taxonomy-boxing-shorts ::= "Boxing Shorts" 
+
+taxonomy-dance-dresses-skirts-costumes ::= "Dance Dresses, Skirts & Costumes" 
+
+taxonomy-leotards-unitards ::= "Leotards & Unitards" 
+
+taxonomy-sports-bras ::= "Sports Bras" 
+
+taxonomy-baby-toddler-clothing ::= "Baby & Toddler Clothing" (seperator taxonomy-baby-toddler-clothing-children)? 
+
+taxonomy-baby-toddler-clothing-children ::= (
+	taxonomy-baby-toddler-bottoms | 
+	taxonomy-baby-toddler-diaper-covers | 
+	taxonomy-baby-toddler-dresses | 
+	taxonomy-baby-toddler-outerwear | 
+	taxonomy-baby-toddler-outfits | 
+	taxonomy-baby-toddler-sleepwear | 
+	taxonomy-baby-toddler-socks-tights | 
+	taxonomy-baby-toddler-swimwear | 
+	taxonomy-baby-toddler-tops | 
+	taxonomy-baby-one-pieces | 
+	taxonomy-toddler-underwear
+)
+
+taxonomy-baby-toddler-bottoms ::= "Baby & Toddler Bottoms" (seperator taxonomy-baby-toddler-bottoms-children)? 
+
+taxonomy-baby-toddler-bottoms-children ::= (
+	taxonomy-cargos | 
+	taxonomy-chinos | 
+	taxonomy-jeans | 
+	taxonomy-jeggings | 
+	taxonomy-joggers | 
+	taxonomy-leggings | 
+	taxonomy-skirts | 
+	taxonomy-skorts | 
+	taxonomy-sweatpants | 
+	taxonomy-trousers
+)
+
+taxonomy-cargos ::= "Cargos" 
+
+taxonomy-chinos ::= "Chinos" 
+
+taxonomy-jeans ::= "Jeans" 
+
+taxonomy-jeggings ::= "Jeggings" 
+
+taxonomy-joggers ::= "Joggers" 
+
+taxonomy-leggings ::= "Leggings" 
+
+taxonomy-skirts ::= "Skirts" 
+
+taxonomy-skorts ::= "Skorts" 
+
+taxonomy-sweatpants ::= "Sweatpants" 
+
+taxonomy-trousers ::= "Trousers" 
+
+taxonomy-baby-toddler-diaper-covers ::= "Baby & Toddler Diaper Covers" 
+
+taxonomy-baby-toddler-dresses ::= "Baby & Toddler Dresses" 
+
+taxonomy-baby-toddler-outerwear ::= "Baby & Toddler Outerwear" (seperator taxonomy-baby-toddler-outerwear-children)? 
+
+taxonomy-baby-toddler-outerwear-children ::= (
+	taxonomy-baby-toddler-coats-jackets | 
+	taxonomy-snow-pants-suits
+)
+
+taxonomy-baby-toddler-coats-jackets ::= "Baby & Toddler Coats & Jackets" (seperator taxonomy-baby-toddler-coats-jackets-children)? 
+
+taxonomy-baby-toddler-coats-jackets-children ::= (
+	taxonomy-bolero-jackets | 
+	taxonomy-bomber-jackets | 
+	taxonomy-capes | 
+	taxonomy-motorcycle-outerwear | 
+	taxonomy-overcoats | 
+	taxonomy-parkas | 
+	taxonomy-pea-coats | 
+	taxonomy-ponchos | 
+	taxonomy-puffer-jackets | 
+	taxonomy-rain-coats | 
+	taxonomy-sport-jackets | 
+	taxonomy-track-jackets | 
+	taxonomy-trench-coats | 
+	taxonomy-trucker-jackets | 
+	taxonomy-windbreakers | 
+	taxonomy-wrap-coats
+)
+
+taxonomy-bolero-jackets ::= "Bolero Jackets" 
+
+taxonomy-bomber-jackets ::= "Bomber Jackets" 
+
+taxonomy-capes ::= "Capes" 
+
+taxonomy-motorcycle-outerwear ::= "Motorcycle Outerwear" 
+
+taxonomy-overcoats ::= "Overcoats" 
+
+taxonomy-parkas ::= "Parkas" 
+
+taxonomy-pea-coats ::= "Pea Coats" 
+
+taxonomy-ponchos ::= "Ponchos" 
+
+taxonomy-puffer-jackets ::= "Puffer Jackets" 
+
+taxonomy-rain-coats ::= "Rain Coats" 
+
+taxonomy-sport-jackets ::= "Sport Jackets" 
+
+taxonomy-track-jackets ::= "Track Jackets" 
+
+taxonomy-trench-coats ::= "Trench Coats" 
+
+taxonomy-trucker-jackets ::= "Trucker Jackets" 
+
+taxonomy-windbreakers ::= "Windbreakers" 
+
+taxonomy-wrap-coats ::= "Wrap Coats" 
+
+taxonomy-snow-pants-suits ::= "Snow Pants & Suits" 
+
+taxonomy-baby-toddler-outfits ::= "Baby & Toddler Outfits" 
+
+taxonomy-baby-toddler-sleepwear ::= "Baby & Toddler Sleepwear" 
+
+taxonomy-baby-toddler-socks-tights ::= "Baby & Toddler Socks & Tights" 
+
+taxonomy-baby-toddler-swimwear ::= "Baby & Toddler Swimwear" (seperator taxonomy-baby-toddler-swimwear-children)? 
+
+taxonomy-baby-toddler-swimwear-children ::= (
+	taxonomy-burkinis | 
+	taxonomy-classic-bikinis | 
+	taxonomy-cover-ups | 
+	taxonomy-one-piece-swimsuits | 
+	taxonomy-rash-guards | 
+	taxonomy-skirtinis | 
+	taxonomy-surf-tops | 
+	taxonomy-swim-boxers | 
+	taxonomy-swim-briefs | 
+	taxonomy-swim-dresses | 
+	taxonomy-swim-jammers | 
+	taxonomy-swim-trunks | 
+	taxonomy-swimwear-tops
+)
+
+taxonomy-burkinis ::= "Burkinis" 
+
+taxonomy-classic-bikinis ::= "Classic Bikinis" 
+
+taxonomy-cover-ups ::= "Cover Ups" 
+
+taxonomy-one-piece-swimsuits ::= "One-Piece Swimsuits" 
+
+taxonomy-rash-guards ::= "Rash Guards" 
+
+taxonomy-skirtinis ::= "Skirtinis" 
+
+taxonomy-surf-tops ::= "Surf Tops" 
+
+taxonomy-swim-boxers ::= "Swim Boxers" 
+
+taxonomy-swim-briefs ::= "Swim Briefs" 
+
+taxonomy-swim-dresses ::= "Swim Dresses" 
+
+taxonomy-swim-jammers ::= "Swim Jammers" 
+
+taxonomy-swim-trunks ::= "Swim Trunks" 
+
+taxonomy-swimwear-tops ::= "Swimwear Tops" 
+
+taxonomy-baby-toddler-tops ::= "Baby & Toddler Tops" (seperator taxonomy-baby-toddler-tops-children)? 
+
+taxonomy-baby-toddler-tops-children ::= (
+	taxonomy-bodysuits | 
+	taxonomy-cardigans | 
+	taxonomy-hoodies | 
+	taxonomy-overshirts | 
+	taxonomy-polos | 
+	taxonomy-shirts | 
+	taxonomy-sweaters | 
+	taxonomy-sweatshirts | 
+	taxonomy-t-shirts | 
+	taxonomy-tunics
+)
+
+taxonomy-bodysuits ::= "Bodysuits" 
+
+taxonomy-cardigans ::= "Cardigans" 
+
+taxonomy-hoodies ::= "Hoodies" 
+
+taxonomy-overshirts ::= "Overshirts" 
+
+taxonomy-polos ::= "Polos" 
+
+taxonomy-shirts ::= "Shirts" 
+
+taxonomy-sweaters ::= "Sweaters" 
+
+taxonomy-sweatshirts ::= "Sweatshirts" 
+
+taxonomy-t-shirts ::= "T-Shirts" 
+
+taxonomy-tunics ::= "Tunics" 
+
+taxonomy-baby-one-pieces ::= "Baby One-Pieces" 
+
+taxonomy-toddler-underwear ::= "Toddler Underwear" (seperator taxonomy-toddler-underwear-children)? 
+
+taxonomy-toddler-underwear-children ::= (
+	taxonomy-boxer-briefs | 
+	taxonomy-boxers | 
+	taxonomy-briefs | 
+	taxonomy-panties | 
+	taxonomy-training-pants
+)
+
+taxonomy-boxer-briefs ::= "Boxer Briefs" 
+
+taxonomy-boxers ::= "Boxers" 
+
+taxonomy-briefs ::= "Briefs" 
+
+taxonomy-panties ::= "Panties" 
+
+taxonomy-training-pants ::= "Training Pants" 
+
+taxonomy-boys-underwear ::= "Boys' Underwear" (seperator taxonomy-boys-underwear-children)? 
+
+taxonomy-boys-underwear-children ::= (
+	taxonomy-boys-long-johns | 
+	taxonomy-boys-underpants | 
+	taxonomy-boys-undershirts
+)
+
+taxonomy-boys-long-johns ::= "Boys' Long Johns" 
+
+taxonomy-boys-underpants ::= "Boys' Underpants" (seperator taxonomy-boys-underpants-children)? 
+
+taxonomy-boys-underpants-children ::= (
+	taxonomy-boxer-briefs | 
+	taxonomy-boxer-shorts | 
+	taxonomy-briefs | 
+	taxonomy-midway-briefs | 
+	taxonomy-trunks
+)
+
+taxonomy-boxer-briefs ::= "Boxer Briefs" 
+
+taxonomy-boxer-shorts ::= "Boxer Shorts" 
+
+taxonomy-briefs ::= "Briefs" 
+
+taxonomy-midway-briefs ::= "Midway Briefs" 
+
+taxonomy-trunks ::= "Trunks" 
+
+taxonomy-boys-undershirts ::= "Boys' Undershirts" 
+
+taxonomy-clothing-tops ::= "Clothing Tops" (seperator taxonomy-clothing-tops-children)? 
+
+taxonomy-clothing-tops-children ::= (
+	taxonomy-blouses | 
+	taxonomy-bodysuits | 
+	taxonomy-cardigans | 
+	taxonomy-hoodies | 
+	taxonomy-overshirts | 
+	taxonomy-polos | 
+	taxonomy-shirts | 
+	taxonomy-sweaters | 
+	taxonomy-sweatshirts | 
+	taxonomy-t-shirts | 
+	taxonomy-tank-tops | 
+	taxonomy-tunics
+)
+
+taxonomy-blouses ::= "Blouses" 
+
+taxonomy-bodysuits ::= "Bodysuits" 
+
+taxonomy-cardigans ::= "Cardigans" 
+
+taxonomy-hoodies ::= "Hoodies" 
+
+taxonomy-overshirts ::= "Overshirts" 
+
+taxonomy-polos ::= "Polos" 
+
+taxonomy-shirts ::= "Shirts" 
+
+taxonomy-sweaters ::= "Sweaters" 
+
+taxonomy-sweatshirts ::= "Sweatshirts" 
+
+taxonomy-t-shirts ::= "T-Shirts" 
+
+taxonomy-tank-tops ::= "Tank Tops" 
+
+taxonomy-tunics ::= "Tunics" 
+
+taxonomy-dresses ::= "Dresses" 
+
+taxonomy-girls-underwear ::= "Girls' Underwear" (seperator taxonomy-girls-underwear-children)? 
+
+taxonomy-girls-underwear-children ::= (
+	taxonomy-girls-long-johns | 
+	taxonomy-girls-underpants | 
+	taxonomy-girls-undershirts
+)
+
+taxonomy-girls-long-johns ::= "Girls' Long Johns" 
+
+taxonomy-girls-underpants ::= "Girls' Underpants" (seperator taxonomy-girls-underpants-children)? 
+
+taxonomy-girls-underpants-children ::= (
+	taxonomy-bikinis | 
+	taxonomy-boxer-briefs | 
+	taxonomy-boyshorts | 
+	taxonomy-briefs | 
+	taxonomy-hipsters | 
+	taxonomy-panties | 
+	taxonomy-period-underwear | 
+	taxonomy-thongs
+)
+
+taxonomy-bikinis ::= "Bikinis" 
+
+taxonomy-boxer-briefs ::= "Boxer Briefs" 
+
+taxonomy-boyshorts ::= "Boyshorts" 
+
+taxonomy-briefs ::= "Briefs" 
+
+taxonomy-hipsters ::= "Hipsters" 
+
+taxonomy-panties ::= "Panties" 
+
+taxonomy-period-underwear ::= "Period Underwear" 
+
+taxonomy-thongs ::= "Thongs" 
+
+taxonomy-girls-undershirts ::= "Girls' Undershirts" (seperator taxonomy-girls-undershirts-children)? 
+
+taxonomy-girls-undershirts-children ::= (
+	taxonomy-first-bras
+)
+
+taxonomy-first-bras ::= "First Bras" 
+
+taxonomy-lingerie ::= "Lingerie" (seperator taxonomy-lingerie-children)? 
+
+taxonomy-lingerie-children ::= (
+	taxonomy-bodysuits | 
+	taxonomy-bra-accessories | 
+	taxonomy-bras | 
+	taxonomy-camisoles | 
+	taxonomy-hosiery | 
+	taxonomy-jock-straps | 
+	taxonomy-lingerie-accessories | 
+	taxonomy-petticoats-pettipants | 
+	taxonomy-shapewear | 
+	taxonomy-women-s-underpants | 
+	taxonomy-women-s-undershirts | 
+	taxonomy-women-s-underwear-slips
+)
+
+taxonomy-bodysuits ::= "Bodysuits" 
+
+taxonomy-bra-accessories ::= "Bra Accessories" (seperator taxonomy-bra-accessories-children)? 
+
+taxonomy-bra-accessories-children ::= (
+	taxonomy-bra-strap-pads | 
+	taxonomy-bra-straps-extenders | 
+	taxonomy-breast-enhancing-inserts | 
+	taxonomy-breast-petals-concealers
+)
+
+taxonomy-bra-strap-pads ::= "Bra Strap Pads" 
+
+taxonomy-bra-straps-extenders ::= "Bra Straps & Extenders" 
+
+taxonomy-breast-enhancing-inserts ::= "Breast Enhancing Inserts" 
+
+taxonomy-breast-petals-concealers ::= "Breast Petals & Concealers" 
+
+taxonomy-bras ::= "Bras" 
+
+taxonomy-camisoles ::= "Camisoles" 
+
+taxonomy-hosiery ::= "Hosiery" 
+
+taxonomy-jock-straps ::= "Jock Straps" 
+
+taxonomy-lingerie-accessories ::= "Lingerie Accessories" (seperator taxonomy-lingerie-accessories-children)? 
+
+taxonomy-lingerie-accessories-children ::= (
+	taxonomy-garter-belts | 
+	taxonomy-garters | 
+	taxonomy-pantyhose
+)
+
+taxonomy-garter-belts ::= "Garter Belts" 
+
+taxonomy-garters ::= "Garters" 
+
+taxonomy-pantyhose ::= "Pantyhose" 
+
+taxonomy-petticoats-pettipants ::= "Petticoats & Pettipants" 
+
+taxonomy-shapewear ::= "Shapewear" (seperator taxonomy-shapewear-children)? 
+
+taxonomy-shapewear-children ::= (
+	taxonomy-bodysuits | 
+	taxonomy-full-body-shapes | 
+	taxonomy-high-waisted-briefs | 
+	taxonomy-thigh-slimmers | 
+	taxonomy-waist-cinchers
+)
+
+taxonomy-bodysuits ::= "Bodysuits" 
+
+taxonomy-full-body-shapes ::= "Full Body Shapes" 
+
+taxonomy-high-waisted-briefs ::= "High Waisted Briefs" 
+
+taxonomy-thigh-slimmers ::= "Thigh Slimmers" 
+
+taxonomy-waist-cinchers ::= "Waist Cinchers" 
+
+taxonomy-women-s-underpants ::= "Women's Underpants" (seperator taxonomy-women-s-underpants-children)? 
+
+taxonomy-women-s-underpants-children ::= (
+	taxonomy-bikinis | 
+	taxonomy-boyshorts | 
+	taxonomy-briefs | 
+	taxonomy-g-strings | 
+	taxonomy-period-underwear | 
+	taxonomy-thongs
+)
+
+taxonomy-bikinis ::= "Bikinis" 
+
+taxonomy-boyshorts ::= "Boyshorts" 
+
+taxonomy-briefs ::= "Briefs" 
+
+taxonomy-g-strings ::= "G-Strings" 
+
+taxonomy-period-underwear ::= "Period Underwear" 
+
+taxonomy-thongs ::= "Thongs" 
+
+taxonomy-women-s-undershirts ::= "Women's Undershirts" 
+
+taxonomy-women-s-underwear-slips ::= "Women's Underwear Slips" 
+
+taxonomy-maternity-clothing ::= "Maternity Clothing" (seperator taxonomy-maternity-clothing-children)? 
+
+taxonomy-maternity-clothing-children ::= (
+	taxonomy-maternity-dresses | 
+	taxonomy-maternity-one-pieces | 
+	taxonomy-maternity-pants | 
+	taxonomy-maternity-skirts | 
+	taxonomy-maternity-sleepwear | 
+	taxonomy-maternity-swimwear | 
+	taxonomy-maternity-tops | 
+	taxonomy-nursing-bras
+)
+
+taxonomy-maternity-dresses ::= "Maternity Dresses" 
+
+taxonomy-maternity-one-pieces ::= "Maternity One-Pieces" 
+
+taxonomy-maternity-pants ::= "Maternity Pants" (seperator taxonomy-maternity-pants-children)? 
+
+taxonomy-maternity-pants-children ::= (
+	taxonomy-cargos | 
+	taxonomy-chinos | 
+	taxonomy-jeans | 
+	taxonomy-jeggings | 
+	taxonomy-joggers | 
+	taxonomy-leggings | 
+	taxonomy-skorts | 
+	taxonomy-trousers
+)
+
+taxonomy-cargos ::= "Cargos" 
+
+taxonomy-chinos ::= "Chinos" 
+
+taxonomy-jeans ::= "Jeans" 
+
+taxonomy-jeggings ::= "Jeggings" 
+
+taxonomy-joggers ::= "Joggers" 
+
+taxonomy-leggings ::= "Leggings" 
+
+taxonomy-skorts ::= "Skorts" 
+
+taxonomy-trousers ::= "Trousers" 
+
+taxonomy-maternity-skirts ::= "Maternity Skirts" 
+
+taxonomy-maternity-sleepwear ::= "Maternity Sleepwear" 
+
+taxonomy-maternity-swimwear ::= "Maternity Swimwear" (seperator taxonomy-maternity-swimwear-children)? 
+
+taxonomy-maternity-swimwear-children ::= (
+	taxonomy-burkinis | 
+	taxonomy-classic-bikinis | 
+	taxonomy-cover-ups | 
+	taxonomy-one-piece-swimsuits | 
+	taxonomy-swim-boxers | 
+	taxonomy-swim-dresses | 
+	taxonomy-swimwear-tops
+)
+
+taxonomy-burkinis ::= "Burkinis" 
+
+taxonomy-classic-bikinis ::= "Classic Bikinis" 
+
+taxonomy-cover-ups ::= "Cover Ups" 
+
+taxonomy-one-piece-swimsuits ::= "One-Piece Swimsuits" 
+
+taxonomy-swim-boxers ::= "Swim Boxers" 
+
+taxonomy-swim-dresses ::= "Swim Dresses" 
+
+taxonomy-swimwear-tops ::= "Swimwear Tops" 
+
+taxonomy-maternity-tops ::= "Maternity Tops" (seperator taxonomy-maternity-tops-children)? 
+
+taxonomy-maternity-tops-children ::= (
+	taxonomy-blouses | 
+	taxonomy-bodysuits | 
+	taxonomy-cardigans | 
+	taxonomy-nursing-shirts | 
+	taxonomy-overshirts | 
+	taxonomy-shirts | 
+	taxonomy-t-shirts | 
+	taxonomy-tunics
+)
+
+taxonomy-blouses ::= "Blouses" 
+
+taxonomy-bodysuits ::= "Bodysuits" 
+
+taxonomy-cardigans ::= "Cardigans" 
+
+taxonomy-nursing-shirts ::= "Nursing Shirts" 
+
+taxonomy-overshirts ::= "Overshirts" 
+
+taxonomy-shirts ::= "Shirts" 
+
+taxonomy-t-shirts ::= "T-Shirts" 
+
+taxonomy-tunics ::= "Tunics" 
+
+taxonomy-nursing-bras ::= "Nursing Bras" 
+
+taxonomy-men-s-undergarments ::= "Men's Undergarments" (seperator taxonomy-men-s-undergarments-children)? 
+
+taxonomy-men-s-undergarments-children ::= (
+	taxonomy-men-s-long-johns | 
+	taxonomy-men-s-undershirts | 
+	taxonomy-men-s-underwear
+)
+
+taxonomy-men-s-long-johns ::= "Men's Long Johns" 
+
+taxonomy-men-s-undershirts ::= "Men's Undershirts" 
+
+taxonomy-men-s-underwear ::= "Men's Underwear" (seperator taxonomy-men-s-underwear-children)? 
+
+taxonomy-men-s-underwear-children ::= (
+	taxonomy-boxer-briefs | 
+	taxonomy-boxer-shorts | 
+	taxonomy-briefs | 
+	taxonomy-jockstraps | 
+	taxonomy-midway-briefs | 
+	taxonomy-thongs | 
+	taxonomy-trunks | 
+	taxonomy-undershorts
+)
+
+taxonomy-boxer-briefs ::= "Boxer Briefs" 
+
+taxonomy-boxer-shorts ::= "Boxer Shorts" 
+
+taxonomy-briefs ::= "Briefs" 
+
+taxonomy-jockstraps ::= "Jockstraps" 
+
+taxonomy-midway-briefs ::= "Midway Briefs" 
+
+taxonomy-thongs ::= "Thongs" 
+
+taxonomy-trunks ::= "Trunks" 
+
+taxonomy-undershorts ::= "Undershorts" 
+
+taxonomy-one-pieces ::= "One-Pieces" 
+
+taxonomy-outerwear ::= "Outerwear" (seperator taxonomy-outerwear-children)? 
+
+taxonomy-outerwear-children ::= (
+	taxonomy-chaps | 
+	taxonomy-coats-jackets | 
+	taxonomy-motorcycle-outerwear | 
+	taxonomy-rain-pants | 
+	taxonomy-rain-suits | 
+	taxonomy-snow-pants-suits | 
+	taxonomy-vests
+)
+
+taxonomy-chaps ::= "Chaps" 
+
+taxonomy-coats-jackets ::= "Coats & Jackets" (seperator taxonomy-coats-jackets-children)? 
+
+taxonomy-coats-jackets-children ::= (
+	taxonomy-bolero-jackets | 
+	taxonomy-bomber-jackets | 
+	taxonomy-capes | 
+	taxonomy-overcoats | 
+	taxonomy-parkas | 
+	taxonomy-pea-coats | 
+	taxonomy-ponchos | 
+	taxonomy-puffer-jackets | 
+	taxonomy-rain-coats | 
+	taxonomy-sport-jackets | 
+	taxonomy-track-jackets | 
+	taxonomy-trench-coats | 
+	taxonomy-trucker-jackets | 
+	taxonomy-varsity-jackets | 
+	taxonomy-windbreakers | 
+	taxonomy-wrap-coats
+)
+
+taxonomy-bolero-jackets ::= "Bolero Jackets" 
+
+taxonomy-bomber-jackets ::= "Bomber Jackets" 
+
+taxonomy-capes ::= "Capes" 
+
+taxonomy-overcoats ::= "Overcoats" 
+
+taxonomy-parkas ::= "Parkas" 
+
+taxonomy-pea-coats ::= "Pea Coats" 
+
+taxonomy-ponchos ::= "Ponchos" 
+
+taxonomy-puffer-jackets ::= "Puffer Jackets" 
+
+taxonomy-rain-coats ::= "Rain Coats" 
+
+taxonomy-sport-jackets ::= "Sport Jackets" 
+
+taxonomy-track-jackets ::= "Track Jackets" 
+
+taxonomy-trench-coats ::= "Trench Coats" 
+
+taxonomy-trucker-jackets ::= "Trucker Jackets" 
+
+taxonomy-varsity-jackets ::= "Varsity Jackets" 
+
+taxonomy-windbreakers ::= "Windbreakers" 
+
+taxonomy-wrap-coats ::= "Wrap Coats" 
+
+taxonomy-motorcycle-outerwear ::= "Motorcycle Outerwear" 
+
+taxonomy-rain-pants ::= "Rain Pants" 
+
+taxonomy-rain-suits ::= "Rain Suits" 
+
+taxonomy-snow-pants-suits ::= "Snow Pants & Suits" 
+
+taxonomy-vests ::= "Vests" 
+
+taxonomy-outfit-sets ::= "Outfit Sets" 
+
+taxonomy-pants ::= "Pants" (seperator taxonomy-pants-children)? 
+
+taxonomy-pants-children ::= (
+	taxonomy-cargo-pants | 
+	taxonomy-chinos | 
+	taxonomy-jeans | 
+	taxonomy-jeggings | 
+	taxonomy-joggers | 
+	taxonomy-leggings | 
+	taxonomy-trousers
+)
+
+taxonomy-cargo-pants ::= "Cargo Pants" 
+
+taxonomy-chinos ::= "Chinos" 
+
+taxonomy-jeans ::= "Jeans" 
+
+taxonomy-jeggings ::= "Jeggings" 
+
+taxonomy-joggers ::= "Joggers" 
+
+taxonomy-leggings ::= "Leggings" 
+
+taxonomy-trousers ::= "Trousers" 
+
+taxonomy-shorts ::= "Shorts" (seperator taxonomy-shorts-children)? 
+
+taxonomy-shorts-children ::= (
+	taxonomy-bermudas | 
+	taxonomy-cargo-shorts | 
+	taxonomy-chino-shorts | 
+	taxonomy-denim-shorts | 
+	taxonomy-jegging-shorts | 
+	taxonomy-jogger-shorts | 
+	taxonomy-legging-shorts | 
+	taxonomy-short-trousers
+)
+
+taxonomy-bermudas ::= "Bermudas" 
+
+taxonomy-cargo-shorts ::= "Cargo Shorts" 
+
+taxonomy-chino-shorts ::= "Chino Shorts" 
+
+taxonomy-denim-shorts ::= "Denim Shorts" 
+
+taxonomy-jegging-shorts ::= "Jegging Shorts" 
+
+taxonomy-jogger-shorts ::= "Jogger Shorts" 
+
+taxonomy-legging-shorts ::= "Legging Shorts" 
+
+taxonomy-short-trousers ::= "Short Trousers" 
+
+taxonomy-skirts ::= "Skirts" 
+
+taxonomy-skorts ::= "Skorts" 
+
+taxonomy-sleepwear-loungewear ::= "Sleepwear & Loungewear" (seperator taxonomy-sleepwear-loungewear-children)? 
+
+taxonomy-sleepwear-loungewear-children ::= (
+	taxonomy-long-johns | 
+	taxonomy-loungewear | 
+	taxonomy-nightgowns | 
+	taxonomy-onesies | 
+	taxonomy-pajamas | 
+	taxonomy-robes
+)
+
+taxonomy-long-johns ::= "Long Johns" 
+
+taxonomy-loungewear ::= "Loungewear" (seperator taxonomy-loungewear-children)? 
+
+taxonomy-loungewear-children ::= (
+	taxonomy-loungewear-bottoms | 
+	taxonomy-loungewear-tops
+)
+
+taxonomy-loungewear-bottoms ::= "Loungewear Bottoms" (seperator taxonomy-loungewear-bottoms-children)? 
+
+taxonomy-loungewear-bottoms-children ::= (
+	taxonomy-boxers | 
+	taxonomy-joggers | 
+	taxonomy-leggings | 
+	taxonomy-shorts | 
+	taxonomy-skirts
+)
+
+taxonomy-boxers ::= "Boxers" 
+
+taxonomy-joggers ::= "Joggers" 
+
+taxonomy-leggings ::= "Leggings" 
+
+taxonomy-shorts ::= "Shorts" 
+
+taxonomy-skirts ::= "Skirts" 
+
+taxonomy-loungewear-tops ::= "Loungewear Tops" 
+
+taxonomy-nightgowns ::= "Nightgowns" 
+
+taxonomy-onesies ::= "Onesies" 
+
+taxonomy-pajamas ::= "Pajamas" 
+
+taxonomy-robes ::= "Robes" 
+
+taxonomy-socks ::= "Socks" (seperator taxonomy-socks-children)? 
+
+taxonomy-socks-children ::= (
+	taxonomy-ankle-socks | 
+	taxonomy-athletic-socks | 
+	taxonomy-crew-socks | 
+	taxonomy-dance-socks | 
+	taxonomy-footie-socks | 
+	taxonomy-heel-socks | 
+	taxonomy-hold-up-socks | 
+	taxonomy-knee-socks | 
+	taxonomy-panty-socks | 
+	taxonomy-sneaker-socks
+)
+
+taxonomy-ankle-socks ::= "Ankle Socks" 
+
+taxonomy-athletic-socks ::= "Athletic Socks" 
+
+taxonomy-crew-socks ::= "Crew Socks" 
+
+taxonomy-dance-socks ::= "Dance Socks" 
+
+taxonomy-footie-socks ::= "Footie Socks" 
+
+taxonomy-heel-socks ::= "Heel Socks" 
+
+taxonomy-hold-up-socks ::= "Hold Up Socks" 
+
+taxonomy-knee-socks ::= "Knee Socks" 
+
+taxonomy-panty-socks ::= "Panty Socks" 
+
+taxonomy-sneaker-socks ::= "Sneaker Socks" 
+
+taxonomy-suits ::= "Suits" (seperator taxonomy-suits-children)? 
+
+taxonomy-suits-children ::= (
+	taxonomy-pant-suits | 
+	taxonomy-skirt-suits | 
+	taxonomy-tuxedos
+)
+
+taxonomy-pant-suits ::= "Pant Suits" 
+
+taxonomy-skirt-suits ::= "Skirt Suits" 
+
+taxonomy-tuxedos ::= "Tuxedos" 
+
+taxonomy-swimwear ::= "Swimwear" (seperator taxonomy-swimwear-children)? 
+
+taxonomy-swimwear-children ::= (
+	taxonomy-boardshorts | 
+	taxonomy-burkinis | 
+	taxonomy-classic-bikinis | 
+	taxonomy-cover-ups | 
+	taxonomy-one-piece-swimsuits | 
+	taxonomy-period-swimwear | 
+	taxonomy-rash-guards | 
+	taxonomy-surf-tops | 
+	taxonomy-swim-boxers | 
+	taxonomy-swim-briefs | 
+	taxonomy-swim-dresses | 
+	taxonomy-swimwear-tops
+)
+
+taxonomy-boardshorts ::= "Boardshorts" 
+
+taxonomy-burkinis ::= "Burkinis" 
+
+taxonomy-classic-bikinis ::= "Classic Bikinis" 
+
+taxonomy-cover-ups ::= "Cover Ups" 
+
+taxonomy-one-piece-swimsuits ::= "One-Piece Swimsuits" 
+
+taxonomy-period-swimwear ::= "Period Swimwear" 
+
+taxonomy-rash-guards ::= "Rash Guards" 
+
+taxonomy-surf-tops ::= "Surf Tops" 
+
+taxonomy-swim-boxers ::= "Swim Boxers" 
+
+taxonomy-swim-briefs ::= "Swim Briefs" 
+
+taxonomy-swim-dresses ::= "Swim Dresses" 
+
+taxonomy-swimwear-tops ::= "Swimwear Tops" 
+
+taxonomy-traditional-ceremonial-clothing ::= "Traditional & Ceremonial Clothing" (seperator taxonomy-traditional-ceremonial-clothing-children)? 
+
+taxonomy-traditional-ceremonial-clothing-children ::= (
+	taxonomy-kimonos | 
+	taxonomy-saris-lehengas
+)
+
+taxonomy-kimonos ::= "Kimonos" 
+
+taxonomy-saris-lehengas ::= "Saris & Lehengas" 
+
+taxonomy-uniforms-workwear ::= "Uniforms & Workwear" (seperator taxonomy-uniforms-workwear-children)? 
+
+taxonomy-uniforms-workwear-children ::= (
+	taxonomy-contractor-pants-coveralls | 
+	taxonomy-flight-suits | 
+	taxonomy-food-service-uniforms | 
+	taxonomy-military-uniforms | 
+	taxonomy-school-uniforms | 
+	taxonomy-scrubs | 
+	taxonomy-security-uniforms | 
+	taxonomy-sports-uniforms | 
+	taxonomy-white-coats
+)
+
+taxonomy-contractor-pants-coveralls ::= "Contractor Pants & Coveralls" 
+
+taxonomy-flight-suits ::= "Flight Suits" 
+
+taxonomy-food-service-uniforms ::= "Food Service Uniforms" 
+
+taxonomy-military-uniforms ::= "Military Uniforms" 
+
+taxonomy-school-uniforms ::= "School Uniforms" 
+
+taxonomy-scrubs ::= "Scrubs" 
+
+taxonomy-security-uniforms ::= "Security Uniforms" 
+
+taxonomy-sports-uniforms ::= "Sports Uniforms" 
+
+taxonomy-white-coats ::= "White Coats" 
+
+taxonomy-wedding-bridal-party-dresses ::= "Wedding & Bridal Party Dresses" (seperator taxonomy-wedding-bridal-party-dresses-children)? 
+
+taxonomy-wedding-bridal-party-dresses-children ::= (
+	taxonomy-bridal-party-dresses | 
+	taxonomy-wedding-dresses
+)
+
+taxonomy-bridal-party-dresses ::= "Bridal Party Dresses" 
+
+taxonomy-wedding-dresses ::= "Wedding Dresses" 
+
+taxonomy-clothing-accessories ::= "Clothing Accessories" (seperator taxonomy-clothing-accessories-children)? 
+
+taxonomy-clothing-accessories-children ::= (
+	taxonomy-arm-warmers-sleeves | 
+	taxonomy-baby-toddler-clothing-accessories | 
+	taxonomy-balaclavas | 
+	taxonomy-bandanas-headties | 
+	taxonomy-belt-buckles | 
+	taxonomy-belts | 
+	taxonomy-bridal-accessories | 
+	taxonomy-button-studs | 
+	taxonomy-collar-stays | 
+	taxonomy-cufflinks | 
+	taxonomy-decorative-fans | 
+	taxonomy-earmuffs | 
+	taxonomy-fashion-face-masks | 
+	taxonomy-gloves-mittens | 
+	taxonomy-hair-accessories | 
+	taxonomy-hand-muffs | 
+	taxonomy-handkerchiefs | 
+	taxonomy-hats | 
+	taxonomy-headwear | 
+	taxonomy-leg-warmers | 
+	taxonomy-leis | 
+	taxonomy-maternity-belts-support-bands | 
+	taxonomy-neck-gaiters | 
+	taxonomy-neckties | 
+	taxonomy-pinback-buttons | 
+	taxonomy-sashes | 
+	taxonomy-scarves-shawls | 
+	taxonomy-sunglasses | 
+	taxonomy-suspenders | 
+	taxonomy-tie-clips | 
+	taxonomy-traditional-clothing-accessories | 
+	taxonomy-wristbands
+)
+
+taxonomy-arm-warmers-sleeves ::= "Arm Warmers & Sleeves" 
+
+taxonomy-baby-toddler-clothing-accessories ::= "Baby & Toddler Clothing Accessories" (seperator taxonomy-baby-toddler-clothing-accessories-children)? 
+
+taxonomy-baby-toddler-clothing-accessories-children ::= (
+	taxonomy-baby-toddler-belts | 
+	taxonomy-baby-toddler-gloves-mittens | 
+	taxonomy-baby-toddler-hats | 
+	taxonomy-baby-protective-wear
+)
+
+taxonomy-baby-toddler-belts ::= "Baby & Toddler Belts" 
+
+taxonomy-baby-toddler-gloves-mittens ::= "Baby & Toddler Gloves & Mittens" 
+
+taxonomy-baby-toddler-hats ::= "Baby & Toddler Hats" 
+
+taxonomy-baby-protective-wear ::= "Baby Protective Wear" 
+
+taxonomy-balaclavas ::= "Balaclavas" 
+
+taxonomy-bandanas-headties ::= "Bandanas & Headties" 
+
+taxonomy-belt-buckles ::= "Belt Buckles" 
+
+taxonomy-belts ::= "Belts" 
+
+taxonomy-bridal-accessories ::= "Bridal Accessories" 
+
+taxonomy-button-studs ::= "Button Studs" 
+
+taxonomy-collar-stays ::= "Collar Stays" 
+
+taxonomy-cufflinks ::= "Cufflinks" 
+
+taxonomy-decorative-fans ::= "Decorative Fans" 
+
+taxonomy-earmuffs ::= "Earmuffs" 
+
+taxonomy-fashion-face-masks ::= "Fashion Face Masks" 
+
+taxonomy-gloves-mittens ::= "Gloves & Mittens" 
+
+taxonomy-hair-accessories ::= "Hair Accessories" (seperator taxonomy-hair-accessories-children)? 
+
+taxonomy-hair-accessories-children ::= (
+	taxonomy-hair-bands | 
+	taxonomy-hair-bun-volume-shapers | 
+	taxonomy-hair-combs | 
+	taxonomy-hair-extensions | 
+	taxonomy-hair-forks-sticks | 
+	taxonomy-hair-nets | 
+	taxonomy-hair-pins-claws-clips | 
+	taxonomy-hair-wreaths | 
+	taxonomy-headbands | 
+	taxonomy-ponytail-holders | 
+	taxonomy-tiaras | 
+	taxonomy-wig-accessories | 
+	taxonomy-wigs
+)
+
+taxonomy-hair-bands ::= "Hair Bands" 
+
+taxonomy-hair-bun-volume-shapers ::= "Hair Bun & Volume Shapers" 
+
+taxonomy-hair-combs ::= "Hair Combs" 
+
+taxonomy-hair-extensions ::= "Hair Extensions" 
+
+taxonomy-hair-forks-sticks ::= "Hair Forks & Sticks" 
+
+taxonomy-hair-nets ::= "Hair Nets" 
+
+taxonomy-hair-pins-claws-clips ::= "Hair Pins, Claws & Clips" 
+
+taxonomy-hair-wreaths ::= "Hair Wreaths" 
+
+taxonomy-headbands ::= "Headbands" 
+
+taxonomy-ponytail-holders ::= "Ponytail Holders" 
+
+taxonomy-tiaras ::= "Tiaras" 
+
+taxonomy-wig-accessories ::= "Wig Accessories" 
+
+taxonomy-wigs ::= "Wigs" 
+
+taxonomy-hand-muffs ::= "Hand Muffs" 
+
+taxonomy-handkerchiefs ::= "Handkerchiefs" 
+
+taxonomy-hats ::= "Hats" (seperator taxonomy-hats-children)? 
+
+taxonomy-hats-children ::= (
+	taxonomy-baseball-caps | 
+	taxonomy-beanies | 
+	taxonomy-berets | 
+	taxonomy-bowler-hats | 
+	taxonomy-bucket-hats | 
+	taxonomy-cowboy-hats | 
+	taxonomy-fedoras | 
+	taxonomy-flat-caps | 
+	taxonomy-panama-hats | 
+	taxonomy-snapback-caps | 
+	taxonomy-sun-hats | 
+	taxonomy-top-hats | 
+	taxonomy-trilbies | 
+	taxonomy-trucker-hats | 
+	taxonomy-visors | 
+	taxonomy-winter-hats
+)
+
+taxonomy-baseball-caps ::= "Baseball Caps" 
+
+taxonomy-beanies ::= "Beanies" 
+
+taxonomy-berets ::= "Berets" 
+
+taxonomy-bowler-hats ::= "Bowler Hats" 
+
+taxonomy-bucket-hats ::= "Bucket Hats" 
+
+taxonomy-cowboy-hats ::= "Cowboy Hats" 
+
+taxonomy-fedoras ::= "Fedoras" 
+
+taxonomy-flat-caps ::= "Flat Caps" 
+
+taxonomy-panama-hats ::= "Panama Hats" 
+
+taxonomy-snapback-caps ::= "Snapback Caps" 
+
+taxonomy-sun-hats ::= "Sun Hats" 
+
+taxonomy-top-hats ::= "Top Hats" 
+
+taxonomy-trilbies ::= "Trilbies" 
+
+taxonomy-trucker-hats ::= "Trucker Hats" 
+
+taxonomy-visors ::= "Visors" 
+
+taxonomy-winter-hats ::= "Winter Hats" 
+
+taxonomy-headwear ::= "Headwear" (seperator taxonomy-headwear-children)? 
+
+taxonomy-headwear-children ::= (
+	taxonomy-fascinators | 
+	taxonomy-headdresses | 
+	taxonomy-turbans
+)
+
+taxonomy-fascinators ::= "Fascinators" 
+
+taxonomy-headdresses ::= "Headdresses" 
+
+taxonomy-turbans ::= "Turbans" 
+
+taxonomy-leg-warmers ::= "Leg Warmers" 
+
+taxonomy-leis ::= "Leis" 
+
+taxonomy-maternity-belts-support-bands ::= "Maternity Belts & Support Bands" 
+
+taxonomy-neck-gaiters ::= "Neck Gaiters" 
+
+taxonomy-neckties ::= "Neckties" 
+
+taxonomy-pinback-buttons ::= "Pinback Buttons" 
+
+taxonomy-sashes ::= "Sashes" 
+
+taxonomy-scarves-shawls ::= "Scarves & Shawls" 
+
+taxonomy-sunglasses ::= "Sunglasses" 
+
+taxonomy-suspenders ::= "Suspenders" 
+
+taxonomy-tie-clips ::= "Tie Clips" 
+
+taxonomy-traditional-clothing-accessories ::= "Traditional Clothing Accessories" 
+
+taxonomy-wristbands ::= "Wristbands" 
+
+taxonomy-costumes-accessories ::= "Costumes & Accessories" (seperator taxonomy-costumes-accessories-children)? 
+
+taxonomy-costumes-accessories-children ::= (
+	taxonomy-costume-accessories | 
+	taxonomy-costume-shoes | 
+	taxonomy-costumes | 
+	taxonomy-masks
+)
+
+taxonomy-costume-accessories ::= "Costume Accessories" 
+
+taxonomy-costume-shoes ::= "Costume Shoes" 
+
+taxonomy-costumes ::= "Costumes" (seperator taxonomy-costumes-children)? 
+
+taxonomy-costumes-children ::= (
+	taxonomy-costume-dresses | 
+	taxonomy-costume-sets
+)
+
+taxonomy-costume-dresses ::= "Costume Dresses" 
+
+taxonomy-costume-sets ::= "Costume Sets" 
+
+taxonomy-masks ::= "Masks" 
+
+taxonomy-handbag-wallet-accessories ::= "Handbag & Wallet Accessories" (seperator taxonomy-handbag-wallet-accessories-children)? 
+
+taxonomy-handbag-wallet-accessories-children ::= (
+	taxonomy-keychains | 
+	taxonomy-lanyards | 
+	taxonomy-wallet-chains
+)
+
+taxonomy-keychains ::= "Keychains" 
+
+taxonomy-lanyards ::= "Lanyards" 
+
+taxonomy-wallet-chains ::= "Wallet Chains" 
+
+taxonomy-handbags-wallets-cases ::= "Handbags, Wallets & Cases" (seperator taxonomy-handbags-wallets-cases-children)? 
+
+taxonomy-handbags-wallets-cases-children ::= (
+	taxonomy-badge-pass-holders | 
+	taxonomy-business-card-cases | 
+	taxonomy-checkbook-covers | 
+	taxonomy-handbags | 
+	taxonomy-wallets-money-clips
+)
+
+taxonomy-badge-pass-holders ::= "Badge & Pass Holders" 
+
+taxonomy-business-card-cases ::= "Business Card Cases" 
+
+taxonomy-checkbook-covers ::= "Checkbook Covers" 
+
+taxonomy-handbags ::= "Handbags" (seperator taxonomy-handbags-children)? 
+
+taxonomy-handbags-children ::= (
+	taxonomy-baguette-handbags | 
+	taxonomy-barrel-bags | 
+	taxonomy-beach-bags | 
+	taxonomy-bucket-bags | 
+	taxonomy-clutch-bags | 
+	taxonomy-convertible-bags | 
+	taxonomy-cross-body-bags | 
+	taxonomy-doctor-bags | 
+	taxonomy-envelope-clutches | 
+	taxonomy-fold-over-clutches | 
+	taxonomy-half-moon-bags | 
+	taxonomy-hobo-bags | 
+	taxonomy-minaudieres | 
+	taxonomy-muff-clutches-bags | 
+	taxonomy-saddle-bags | 
+	taxonomy-satchel-bags | 
+	taxonomy-school-bags | 
+	taxonomy-shopper-bags | 
+	taxonomy-shoulder-bags | 
+	taxonomy-trapezoid-bags
+)
+
+taxonomy-baguette-handbags ::= "Baguette Handbags" 
+
+taxonomy-barrel-bags ::= "Barrel Bags" 
+
+taxonomy-beach-bags ::= "Beach Bags" 
+
+taxonomy-bucket-bags ::= "Bucket Bags" 
+
+taxonomy-clutch-bags ::= "Clutch Bags" 
+
+taxonomy-convertible-bags ::= "Convertible Bags" 
+
+taxonomy-cross-body-bags ::= "Cross Body Bags" 
+
+taxonomy-doctor-bags ::= "Doctor Bags" 
+
+taxonomy-envelope-clutches ::= "Envelope Clutches" 
+
+taxonomy-fold-over-clutches ::= "Fold Over Clutches" 
+
+taxonomy-half-moon-bags ::= "Half-Moon Bags" 
+
+taxonomy-hobo-bags ::= "Hobo Bags" 
+
+taxonomy-minaudieres ::= "Minaudieres" 
+
+taxonomy-muff-clutches-bags ::= "Muff Clutches & Bags" 
+
+taxonomy-saddle-bags ::= "Saddle Bags" 
+
+taxonomy-satchel-bags ::= "Satchel Bags" 
+
+taxonomy-school-bags ::= "School Bags" 
+
+taxonomy-shopper-bags ::= "Shopper Bags" 
+
+taxonomy-shoulder-bags ::= "Shoulder Bags" 
+
+taxonomy-trapezoid-bags ::= "Trapezoid Bags" 
+
+taxonomy-wallets-money-clips ::= "Wallets & Money Clips" (seperator taxonomy-wallets-money-clips-children)? 
+
+taxonomy-wallets-money-clips-children ::= (
+	taxonomy-card-cases | 
+	taxonomy-coin-purses | 
+	taxonomy-key-cases | 
+	taxonomy-neck-pouches | 
+	taxonomy-travel-wallets | 
+	taxonomy-wallets | 
+	taxonomy-wrist-bags
+)
+
+taxonomy-card-cases ::= "Card Cases" 
+
+taxonomy-coin-purses ::= "Coin Purses" 
+
+taxonomy-key-cases ::= "Key Cases" 
+
+taxonomy-neck-pouches ::= "Neck Pouches" 
+
+taxonomy-travel-wallets ::= "Travel Wallets" 
+
+taxonomy-wallets ::= "Wallets" 
+
+taxonomy-wrist-bags ::= "Wrist Bags" 
+
+taxonomy-jewelry ::= "Jewelry" (seperator taxonomy-jewelry-children)? 
+
+taxonomy-jewelry-children ::= (
+	taxonomy-anklets | 
+	taxonomy-body-jewelry | 
+	taxonomy-bracelets | 
+	taxonomy-brooches-lapel-pins | 
+	taxonomy-charms-pendants | 
+	taxonomy-earrings | 
+	taxonomy-jewelry-sets | 
+	taxonomy-necklaces | 
+	taxonomy-rings | 
+	taxonomy-smart-watches | 
+	taxonomy-watch-accessories | 
+	taxonomy-watches
+)
+
+taxonomy-anklets ::= "Anklets" 
+
+taxonomy-body-jewelry ::= "Body Jewelry" 
+
+taxonomy-bracelets ::= "Bracelets" 
+
+taxonomy-brooches-lapel-pins ::= "Brooches & Lapel Pins" 
+
+taxonomy-charms-pendants ::= "Charms & Pendants" 
+
+taxonomy-earrings ::= "Earrings" 
+
+taxonomy-jewelry-sets ::= "Jewelry Sets" 
+
+taxonomy-necklaces ::= "Necklaces" 
+
+taxonomy-rings ::= "Rings" 
+
+taxonomy-smart-watches ::= "Smart Watches" 
+
+taxonomy-watch-accessories ::= "Watch Accessories" (seperator taxonomy-watch-accessories-children)? 
+
+taxonomy-watch-accessories-children ::= (
+	taxonomy-watch-bands | 
+	taxonomy-watch-stickers-decals | 
+	taxonomy-watch-winders
+)
+
+taxonomy-watch-bands ::= "Watch Bands" 
+
+taxonomy-watch-stickers-decals ::= "Watch Stickers & Decals" 
+
+taxonomy-watch-winders ::= "Watch Winders" 
+
+taxonomy-watches ::= "Watches" 
+
+taxonomy-shoe-accessories ::= "Shoe Accessories" (seperator taxonomy-shoe-accessories-children)? 
+
+taxonomy-shoe-accessories-children ::= (
+	taxonomy-boot-liners | 
+	taxonomy-gaiters | 
+	taxonomy-shoe-covers | 
+	taxonomy-shoe-grips | 
+	taxonomy-shoe-inserts | 
+	taxonomy-shoelaces | 
+	taxonomy-spurs
+)
+
+taxonomy-boot-liners ::= "Boot Liners" 
+
+taxonomy-gaiters ::= "Gaiters" 
+
+taxonomy-shoe-covers ::= "Shoe Covers" 
+
+taxonomy-shoe-grips ::= "Shoe Grips" 
+
+taxonomy-shoe-inserts ::= "Shoe Inserts" (seperator taxonomy-shoe-inserts-children)? 
+
+taxonomy-shoe-inserts-children ::= (
+	taxonomy-anti-slip-steps | 
+	taxonomy-arch-supports | 
+	taxonomy-gel-pads | 
+	taxonomy-heel-cushions
+)
+
+taxonomy-anti-slip-steps ::= "Anti Slip Steps" 
+
+taxonomy-arch-supports ::= "Arch Supports" 
+
+taxonomy-gel-pads ::= "Gel Pads" 
+
+taxonomy-heel-cushions ::= "Heel Cushions" 
+
+taxonomy-shoelaces ::= "Shoelaces" 
+
+taxonomy-spurs ::= "Spurs" 
+
+taxonomy-shoes ::= "Shoes" (seperator taxonomy-shoes-children)? 
+
+taxonomy-shoes-children ::= (
+	taxonomy-athletic-shoes | 
+	taxonomy-baby-toddler-shoes | 
+	taxonomy-boots | 
+	taxonomy-flats | 
+	taxonomy-heels | 
+	taxonomy-sandals | 
+	taxonomy-slippers | 
+	taxonomy-sneakers
+)
+
+taxonomy-athletic-shoes ::= "Athletic Shoes" 
+
+taxonomy-baby-toddler-shoes ::= "Baby & Toddler Shoes" (seperator taxonomy-baby-toddler-shoes-children)? 
+
+taxonomy-baby-toddler-shoes-children ::= (
+	taxonomy-baby-toddler-athletic-shoes | 
+	taxonomy-baby-toddler-boots | 
+	taxonomy-baby-toddler-sandals | 
+	taxonomy-baby-toddler-sneakers | 
+	taxonomy-first-steps-crawlers
+)
+
+taxonomy-baby-toddler-athletic-shoes ::= "Baby & Toddler Athletic Shoes" 
+
+taxonomy-baby-toddler-boots ::= "Baby & Toddler Boots" 
+
+taxonomy-baby-toddler-sandals ::= "Baby & Toddler Sandals" 
+
+taxonomy-baby-toddler-sneakers ::= "Baby & Toddler Sneakers" 
+
+taxonomy-first-steps-crawlers ::= "First Steps & Crawlers" 
+
+taxonomy-boots ::= "Boots" 
+
+taxonomy-flats ::= "Flats" 
+
+taxonomy-heels ::= "Heels" 
+
+taxonomy-sandals ::= "Sandals" 
+
+taxonomy-slippers ::= "Slippers" 
+
+taxonomy-sneakers ::= "Sneakers" 
+

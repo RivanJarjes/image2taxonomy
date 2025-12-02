@@ -1,0 +1,6 @@
+# This is a test grammar file with only 3 taxonomies to pick from
+root ::= "{" ws "\"title\":" ws string ws "," ws "\"description\":" ws string ws "," ws "\"taxonomy\":" ws taxvalue ws "}"
+string ::= "\"" char* "\""
+char ::= [^"\\] | "\\" ["\\/bfnrtu]
+taxvalue ::= "\"Apparel > Shoes > Sneakers\"" | "\"Apparel > Shoes > Boots\"" | "\"Apparel > Tops > T-Shirts\""
+ws ::= [ \t\n\r]*

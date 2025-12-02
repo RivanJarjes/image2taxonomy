@@ -1,0 +1,11 @@
+# images used during testing
+*.jpg
+*.jpeg
+*.png
+
+# llama server files
+llama-server
+*.dylib
+
+# model files
+*.gguf
