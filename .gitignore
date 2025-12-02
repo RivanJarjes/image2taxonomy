@@ -9,3 +9,8 @@ llama-server
 
 # model files
 *.gguf
+
+# garbage
+.DS_Store
+.idea
+.vscode
