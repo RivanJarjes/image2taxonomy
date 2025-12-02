@@ -40,7 +40,7 @@ func main() {
 		panic("failed to find project root: " + err.Error())
 	}
 
-	modelPath := filepath.Join(projectRoot, "infra", "Qwen3VL-4B-Instruct-Q8_0.gguf")
+	modelPath := filepath.Join(projectRoot, "infra", "models", "Qwen3VL-4B-Instruct-Q8_0.gguf")
 	grammarPath := filepath.Join(projectRoot, "docs", "taxonomy.gbnf")
 
 	// 1. Initialize DB

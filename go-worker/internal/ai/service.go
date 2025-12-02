@@ -28,7 +28,7 @@ func NewEngine(modelPath string, grammarPath string) (*Engine, error) {
 	}
 
 	infraDir := filepath.Dir(modelPath)
-	llamaServerPath := filepath.Join(infraDir, "llama-server")
+	llamaServerPath := filepath.Join(infraDir, "llama", "llama-server")
 
 	// Detect mmproj file - it should be in the same directory with "mmproj-" prefix
 	modelBaseName := filepath.Base(modelPath)
