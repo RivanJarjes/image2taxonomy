@@ -12,8 +12,6 @@ import (
 	"golang.org/x/image/draw"
 )
 
-// ResizeToMinDimension resizes an image so its shortest side is targetSize pixels
-// Returns the path to the resized temporary file
 func ResizeToMinDimension(imagePath string, targetSize int) (string, error) {
 	// Open the original image
 	file, err := os.Open(imagePath)

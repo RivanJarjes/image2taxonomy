@@ -21,25 +21,45 @@ type Engine struct {
 	grammar string
 }
 
-func NewEngine(modelPath string, grammarPath string) (*Engine, error) {
+func NewEngine(llamaServerPath string, modelPath string, grammarPath string, acceleration string, gpuLayers int) (*Engine, error) {
 	grammarBytes, err := os.ReadFile(grammarPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read grammar: %w", err)
 	}
 
-	infraDir := filepath.Dir(modelPath)
-	llamaServerPath := filepath.Join(infraDir, "llama", "llama-server")
-
 	// Detect mmproj file - it should be in the same directory with "mmproj-" prefix
+	modelDir := filepath.Dir(modelPath)
 	modelBaseName := filepath.Base(modelPath)
-	mmprojPath := filepath.Join(infraDir, "mmproj-"+modelBaseName)
+	mmprojPath := filepath.Join(modelDir, "mmproj-"+modelBaseName)
 
 	// Build command arguments
 	args := []string{
 		"-m", modelPath,
 		"--port", "8080",
-		"-ngl", "99",
 		"-c", "8192", // Increased for high-resolution product images (was 2048)
+	}
+
+	// Add acceleration-specific flags
+	switch acceleration {
+	case "metal":
+		fmt.Printf("Using Metal acceleration (Apple Silicon) with %d GPU layers\n", gpuLayers)
+		args = append(args, "-ngl", fmt.Sprintf("%d", gpuLayers))
+		args = append(args, "--device", "metal")
+	case "gpu":
+		fmt.Printf("Using GPU acceleration (CUDA) with %d GPU layers\n", gpuLayers)
+		args = append(args, "-ngl", fmt.Sprintf("%d", gpuLayers))
+		args = append(args, "--device", "cuda")
+	case "arm":
+		fmt.Println("Using ARM NEON acceleration")
+		args = append(args, "-ngl", fmt.Sprintf("%d", gpuLayers))
+		// ARM NEON is typically auto-detected, but we can set it explicitly
+		args = append(args, "--device", "arm")
+	case "cpu":
+		fmt.Println("Using CPU-only mode (no GPU acceleration)")
+		// Don't add -ngl for CPU mode
+	default:
+		fmt.Printf("Unknown acceleration backend '%s', falling back to CPU mode\n", acceleration)
+		// Fallback to CPU mode
 	}
 
 	// Add mmproj if it exists (required for vision models)
@@ -57,7 +77,8 @@ func NewEngine(modelPath string, grammarPath string) (*Engine, error) {
 	cmd.Stderr = os.Stderr
 
 	// Set DYLD_LIBRARY_PATH to point to infra directory where dylib files are located
-	cmd.Env = append(os.Environ(), fmt.Sprintf("DYLD_LIBRARY_PATH=%s", infraDir))
+	llamaBasePath := filepath.Dir(llamaServerPath)
+	cmd.Env = append(os.Environ(), fmt.Sprintf("DYLD_LIBRARY_PATH=%s", llamaBasePath))
 
 	fmt.Println("Starting llama server...")
 	if err := cmd.Start(); err != nil {
@@ -107,18 +128,23 @@ func (e *Engine) AnalyzeImage(imagePath string) (string, error) {
 	- Always select the MOST SPECIFIC leaf category that applies (never stop at a broad node like "Apparel & Accessories").
 	
 	For example, if the main visible product is:
+	- Any clothing on the upper body will be classified under "Clothing > Clothing Tops"
 	- A full suit or tuxedo: use a "Suits > Tuxedos" style path.
 	- A jacket or blazer: use the appropriate "Outerwear" / "Coats & Jackets" path.
 	- DO NOT use Skirt Suits or Pant Suits taxonomy if the product is not a feminine skirt suit or feminine pant suit. If it isn't a tuxedo, use Clothing > Suits instead!
 	- Footwear: only use "Shoes" branches (e.g. Boots, Sneakers) when the product is clearly footwear.
 	- Costumes: only use "Costumes" branches (e.g. Halloween, Mardi Gras, etc.) when the product is clearly a costume.
 	- Any handbag, wallet, backpack, case, etc.: Only use "Handbags, Wallets & Cases" branches when the product is clearly a handbag, wallet, backpack, case, etc.
+	- For hangbags, pay attention to the type of bag, such as crossbody, shoulder, tote, backpack, etc.
 	- Landyards, Keychains, Wallet Chains: Only use "Handbag & Wallet Accessories" branches when the product is clearly a handbag accessory or wallet accessory.
 	- Belts, Hats, Wristbands, etc.: Only use "Clothing Accessories" branches when the product is clearly a belt, hat, wristband, etc.
 	- Any other wearables that don't fit under regular clothing or accessories or bags: Use "Clothing Accessories" branches when the product is clearly a wearable that doesn't fit under regular clothing, accessories, or bags.
-	- All jewelry: Only use "Jewelry" branches when the product is clearly a piece of jewelry.
+	- All jewelry, such as chains, bracelets, earrings, rings, chain belts, etc.: Only use "Jewelry" branches when the product is clearly a piece of jewelry.
+	- All jewelry on the body, such as chain belts, nose rings, belly rings, toe rings, etc.: Use "Jewelry > Body jewelry" branches when the product is clearly a piece of jewelry on the body.
+	- Watches: Use "Jewelry > Watches" branches when the product is clearly a watch.
+	- Smartwatches: Use "Jewelry > Smartwatches" branches when the product is clearly a smartwatch.
 	- Anything shoe related but aren't shoes, such as shoe covers, grips, gel pads, shoelaces, etc.: Use "Shoe Accessories" branches when the product is clearly a shoe accessory.
-	
+	- Any bras, bodysuits, jockstraps, other lingerie items: Use "Lingerie" branches when the product is clearly a lingerie item.
 
 	The taxonomy string MUST be a valid path starting with "Apparel & Accessories" and using only exact names from the taxonomy.`
 
@@ -169,7 +195,7 @@ func (e *Engine) AnalyzeImage(imagePath string) (string, error) {
 		return "", fmt.Errorf("failed to marshal payload: %w", err)
 	}
 
-	fmt.Printf("Sending OpenAI-compatible chat request (payload size: %d bytes)\n", len(jsonData))
+	fmt.Printf("Sending chat request (payload size: %d bytes)\n", len(jsonData))
 
 	req, err := http.NewRequest("POST", e.apiURL+"/v1/chat/completions", bytes.NewBuffer(jsonData))
 	if err != nil {

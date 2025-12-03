@@ -1,0 +1,64 @@
+version: '3.8'
+
+include:
+  - infra/docker-compose.yml
+
+services:
+  # Rails Application
+  rails-app:
+    build:
+      context: ./rails-app
+      dockerfile: Dockerfile
+    container_name: image2taxonomy-rails
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "true"
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/image2taxonomy"
+      REDIS_URL: "redis://redis:6379/1"
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-development-key-change-in-production}
+    ports:
+      - "3000:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - rails_storage:/rails/storage
+    networks:
+      - image2taxonomy
+    restart: unless-stopped
+
+  # Go Worker Service
+  go-worker:
+    build:
+      context: ./go-worker
+      dockerfile: Dockerfile
+    container_name: image2taxonomy-worker
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@postgres:5432/image2taxonomy"
+      REDIS_URL: "redis://redis:6379/0"
+      GOLANG_ENV: "production"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      # Mount the config file
+      - ./config.yml:/app/config.yml:ro
+      # Mount infra resources (llama-server, models, taxonomy)
+      - ./infra/llama:/app/infra/llama:ro
+      - ./infra/models:/app/infra/models:ro
+      - ./docs:/app/docs:ro
+    networks:
+      - image2taxonomy
+    restart: unless-stopped
+
+volumes:
+  rails_storage:
+
+networks:
+  image2taxonomy:
+    driver: bridge
+

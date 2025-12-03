@@ -1,0 +1,11 @@
+model: Qwen3VL-4B-Instruct-Q8_0.gguf
+taxonomy: docs/taxonomy.gbnf
+database: postgres://postgres:postgres@localhost:5432/image2taxonomy
+
+# Acceleration backend for llama-server
+# Options: metal (Apple Silicon), gpu (CUDA), cpu (CPU only), arm (ARM NEON)
+acceleration: metal
+
+# Number of layers to offload to GPU/Metal (only used for gpu/metal backends)
+# Set to 0 to disable GPU acceleration, or -1 to offload all layers
+gpu_layers: 99

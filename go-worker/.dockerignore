@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Test files
+*_test.go
+*.test
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+dist/
+bin/
+*.o
+*.a
+*.so
+
+# Logs
+*.log
+
+# Dependencies (they'll be downloaded fresh in the container)
+vendor/
+
+# Documentation
+*.md
+README.md
+
+# Development files
+.env
+.env.local
+docker-compose.yml
+
