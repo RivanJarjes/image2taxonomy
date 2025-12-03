@@ -21,6 +21,13 @@ type Config struct {
 }
 
 func findProjectRoot() (string, error) {
+	// First, check if we're running in Docker by looking for the mounted config file
+	dockerRoot := "/app"
+	if _, err := os.Stat(filepath.Join(dockerRoot, "config.yml")); err == nil {
+		return dockerRoot, nil
+	}
+
+	// Fall back to finding the project root from source code location (local development)
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {
 		return "", os.ErrNotExist

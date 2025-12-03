@@ -37,24 +37,21 @@ RUN addgroup -g 1000 worker && adduser -D -u 1000 -G worker worker
 # Copy the built binary from builder
 COPY --from=builder /build/worker /app/worker
 
-# Copy config template (can be overridden at runtime)
-COPY config.yml /app/config.yml
-
 # Create infra directories structure for the app to find resources
 RUN mkdir -p /app/infra/llama /app/infra/models /app/docs
 
-# The actual llama-server and models will be mounted or provided at runtime
+# The config file is mounted at runtime via docker-compose volumes
 # Set ownership
 RUN chown -R worker:worker /app
 
 USER 1000:1000
 
 # Health check
+# Must match the port configured in service.go (--port 8080)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8000/health || exit 1
+  CMD curl -f http://localhost:8080/health || exit 1
 
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the worker
 CMD ["./worker"]
-
