@@ -6,7 +6,9 @@
     "@hotwired/turbo-rails": "^8.0.0"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "@tailwindcss/cli": "^4.1.17",
+    "esbuild": "^0.24.0",
+    "tailwindcss": "^4.1.17"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",

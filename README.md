@@ -9,7 +9,6 @@ Image2Taxonomy is a high-performance polyglot microservice built to automate the
 - Go
 - Ruby
 - Docker
-- Preferably a M series Macbook at least as of right now
 - A Qwen3-VL GGUF file (configured to use Qwen3-VL-4B as of right now)
 - CMake for Llama-server
 

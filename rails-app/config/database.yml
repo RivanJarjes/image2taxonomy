@@ -87,18 +87,40 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: rails_app_production
-    username: rails_app
-    password: <%= ENV["RAILS_APP_DATABASE_PASSWORD"] %>
+    # Use DATABASE_URL if set, otherwise construct from env vars
+    <% if ENV["DATABASE_URL"] %>
+    url: <%= ENV["DATABASE_URL"] %>
+    <% else %>
+    database: <%= ENV.fetch("DB_NAME", "image2taxonomy") %>
+    username: <%= ENV.fetch("DB_USERNAME", "postgres") %>
+    password: <%= ENV.fetch("DB_PASSWORD", "postgres") %>
+    host: <%= ENV.fetch("DB_HOST", "localhost") %>
+    port: <%= ENV.fetch("DB_PORT", 5432) %>
+    <% end %>
   cache:
     <<: *primary_production
-    database: rails_app_production_cache
+    <% if ENV["DATABASE_URL"] %>
+    <% base_url = ENV["DATABASE_URL"]; cache_url = base_url.sub(%r{/[^/]+$}, "/#{ENV.fetch("DB_NAME", "image2taxonomy")}_cache") %>
+    url: <%= cache_url %>
+    <% else %>
+    database: <%= "#{ENV.fetch("DB_NAME", "image2taxonomy")}_cache" %>
+    <% end %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: rails_app_production_queue
+    <% if ENV["DATABASE_URL"] %>
+    <% base_url = ENV["DATABASE_URL"]; queue_url = base_url.sub(%r{/[^/]+$}, "/#{ENV.fetch("DB_NAME", "image2taxonomy")}_queue") %>
+    url: <%= queue_url %>
+    <% else %>
+    database: <%= "#{ENV.fetch("DB_NAME", "image2taxonomy")}_queue" %>
+    <% end %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: rails_app_production_cable
+    <% if ENV["DATABASE_URL"] %>
+    <% base_url = ENV["DATABASE_URL"]; cable_url = base_url.sub(%r{/[^/]+$}, "/#{ENV.fetch("DB_NAME", "image2taxonomy")}_cable") %>
+    url: <%= cable_url %>
+    <% else %>
+    database: <%= "#{ENV.fetch("DB_NAME", "image2taxonomy")}_cable" %>
+    <% end %>
     migrations_paths: db/cable_migrate

@@ -1,61 +1,52 @@
-# Default setup (auto-detect or use Metal for Apple Silicon)
+# Read acceleration settings from config.yml
+LOCAL_ACCELERATION := $(shell grep 'local_acceleration:' config.yml | awk '{print $$2}')
+DOCKER_ACCELERATION := $(shell grep 'docker_acceleration:' config.yml | awk '{print $$2}')
+
+# Default setup (reads local_acceleration from config.yml)
 setup-ai:
 	git clone https://github.com/ggml-org/llama.cpp
-	cd llama.cpp && mkdir build && cd build && cmake .. -DLLAMA_METAL=ON && cmake --build . --config Release
+	cd llama.cpp && mkdir build && cd build && \
+	if [ "$(LOCAL_ACCELERATION)" = "metal" ]; then \
+		cmake .. -DLLAMA_METAL=ON; \
+	elif [ "$(LOCAL_ACCELERATION)" = "gpu" ]; then \
+		cmake .. -DLLAMA_CUDA=ON; \
+	elif [ "$(LOCAL_ACCELERATION)" = "arm" ]; then \
+		cmake .. -DLLAMA_NEON=ON; \
+	else \
+		cmake ..; \
+	fi && \
+	cmake --build . --config Release
 	mkdir -p infra/llama
 	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
 	if [ -d "llama.cpp/build/bin" ]; then \
 		cp llama.cpp/build/bin/*.dylib infra/ 2>/dev/null || true; \
 	fi
 	rm -rf llama.cpp
-	@echo "✓ llama-server compiled with Metal acceleration and installed to infra/llama"
-
-# Metal acceleration (Apple Silicon / M1 / M2 / M3 etc)
-setup-ai-metal:
-	git clone https://github.com/ggml-org/llama.cpp
-	cd llama.cpp && mkdir build && cd build && cmake .. -DLLAMA_METAL=ON && cmake --build . --config Release
-	mkdir -p infra/llama
-	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
-	if [ -d "llama.cpp/build/bin" ]; then \
-		cp llama.cpp/build/bin/*.dylib infra/ 2>/dev/null || true; \
-	fi
-	rm -rf llama.cpp
-	@echo "✓ llama-server compiled with Metal acceleration (Apple Silicon)"
-	@echo "  Update config.yml: acceleration: metal"
-
-# GPU acceleration (NVIDIA CUDA)
-setup-ai-gpu:
-	git clone https://github.com/ggml-org/llama.cpp
-	cd llama.cpp && mkdir build && cd build && cmake .. -DLLAMA_CUDA=ON && cmake --build . --config Release
-	mkdir -p infra/llama
-	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
-	rm -rf llama.cpp
-	@echo "✓ llama-server compiled with CUDA GPU acceleration (NVIDIA)"
-	@echo "  Update config.yml: acceleration: gpu"
-
-# ARM NEON acceleration (ARM processors)
-setup-ai-arm:
-	git clone https://github.com/ggml-org/llama.cpp
-	cd llama.cpp && mkdir build && cd build && cmake .. -DLLAMA_NEON=ON && cmake --build . --config Release
-	mkdir -p infra/llama
-	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
-	rm -rf llama.cpp
-	@echo "✓ llama-server compiled with ARM NEON acceleration"
-	@echo "  Update config.yml: acceleration: arm"
-
-# CPU-only (no GPU acceleration)
-setup-ai-cpu:
-	git clone https://github.com/ggml-org/llama.cpp
-	cd llama.cpp && mkdir build && cd build && cmake .. && cmake --build . --config Release
-	mkdir -p infra/llama
-	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
-	rm -rf llama.cpp
-	@echo "✓ llama-server compiled (CPU only - no GPU acceleration)"
-	@echo "  Update config.yml: acceleration: cpu"
-
-setup-ai-no-metal: setup-ai-cpu
+	@echo "✓ llama-server compiled with $(LOCAL_ACCELERATION) acceleration and installed to infra/llama"
 
 # Docker targets
+
+# Setup AI for Docker (reads docker_acceleration from config.yml)
+docker-setup-ai:
+	git clone https://github.com/ggml-org/llama.cpp
+	cd llama.cpp && mkdir build && cd build && \
+	if [ "$(DOCKER_ACCELERATION)" = "metal" ]; then \
+		cmake .. -DLLAMA_METAL=ON; \
+	elif [ "$(DOCKER_ACCELERATION)" = "gpu" ]; then \
+		cmake .. -DLLAMA_CUDA=ON; \
+	elif [ "$(DOCKER_ACCELERATION)" = "arm" ]; then \
+		cmake .. -DLLAMA_NEON=ON; \
+	else \
+		cmake ..; \
+	fi && \
+	cmake --build . --config Release
+	mkdir -p infra/llama
+	cp llama.cpp/build/bin/llama-server infra/llama/llama-server
+	if [ -d "llama.cpp/build/bin" ]; then \
+		cp llama.cpp/build/bin/*.dylib infra/ 2>/dev/null || true; \
+	fi
+	rm -rf llama.cpp
+	@echo "✓ llama-server compiled with $(DOCKER_ACCELERATION) acceleration and installed to infra/llama"
 
 # Start all services
 docker-up:
@@ -150,6 +141,6 @@ docker-health:
 	@docker-compose exec redis redis-cli ping > /dev/null && echo "✓ Redis healthy" || echo "✗ Redis unhealthy"
 	@docker-compose ps | grep -q "Up" && echo "✓ Services running" || echo "✗ Services not running"
 
-.PHONY: docker-up docker-down docker-logs docker-logs-service docker-build docker-build-worker docker-build-rails \
+.PHONY: setup-ai docker-setup-ai docker-up docker-down docker-logs docker-logs-service docker-build docker-build-worker docker-build-rails \
         docker-status docker-migrate docker-psql docker-redis docker-worker-shell docker-rails-console \
         docker-clean docker-stats docker-restart docker-init docker-health

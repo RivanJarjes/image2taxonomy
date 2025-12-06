@@ -1,9 +1,14 @@
 package main
 
 import (
+	"flag"
+	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/rivanjarjes/image2taxonomy/worker/internal/ai"
@@ -13,11 +18,13 @@ import (
 )
 
 type Config struct {
-	Model        string `yaml:"model"`
-	Taxonomy     string `yaml:"taxonomy"`
-	Database     string `yaml:"database"`
-	Acceleration string `yaml:"acceleration"` // metal, gpu, cpu, arm
-	GPULayers    int    `yaml:"gpu_layers"`   // Number of layers to offload to GPU/Metal
+	Model             string `yaml:"model"`
+	Taxonomy          string `yaml:"taxonomy"`
+	Database          string `yaml:"database"`
+	LocalAcceleration string `yaml:"local_acceleration"`  // metal, gpu, cpu, arm
+	LocalGPULayers    int    `yaml:"local_gpu_layers"`    // GPU layers for local
+	DockerAcceleration string `yaml:"docker_acceleration"` // metal, gpu, cpu, arm
+	DockerGPULayers    int    `yaml:"docker_gpu_layers"`   // GPU layers for Docker
 }
 
 func findProjectRoot() (string, error) {
@@ -65,7 +72,28 @@ func loadConfig(projectRoot string) (*Config, error) {
 	return &config, nil
 }
 
+func isRunningInDocker() bool {
+	// Check for /.dockerenv file (created by Docker)
+	if _, err := os.Stat("/.dockerenv"); err == nil {
+		return true
+	}
+	// Check for GOLANG_ENV=production (set in docker-compose.yml)
+	if os.Getenv("GOLANG_ENV") == "production" {
+		return true
+	}
+	// Check if running from /app (Docker working directory)
+	if cwd, err := os.Getwd(); err == nil && strings.HasPrefix(cwd, "/app") {
+		return true
+	}
+	return false
+}
+
 func main() {
+	// Parse command-line flags
+	dockerMode := flag.Bool("docker", false, "Run in Docker mode (uses docker_* config settings)")
+	localMode := flag.Bool("local", false, "Run in local mode (uses local_* config settings)")
+	flag.Parse()
+
 	projectRoot, err := findProjectRoot()
 	if err != nil {
 		panic("failed to find project root: " + err.Error())
@@ -77,23 +105,89 @@ func main() {
 		panic("failed to load config: " + err.Error())
 	}
 
+	// Determine which mode to use: flag > auto-detect
+	var useDockerSettings bool
+	if *dockerMode {
+		useDockerSettings = true
+		fmt.Println("Running in Docker mode (--docker flag)")
+	} else if *localMode {
+		useDockerSettings = false
+		fmt.Println("Running in local mode (--local flag)")
+	} else {
+		// Auto-detect based on environment
+		useDockerSettings = isRunningInDocker()
+		if useDockerSettings {
+			fmt.Println("Auto-detected Docker environment")
+		} else {
+			fmt.Println("Auto-detected local environment")
+		}
+	}
+
+	// Select acceleration settings based on mode
+	var acceleration string
+	var gpuLayers int
+	if useDockerSettings {
+		acceleration = config.DockerAcceleration
+		gpuLayers = config.DockerGPULayers
+		fmt.Printf("Using Docker settings: acceleration=%s, gpu_layers=%d\n", acceleration, gpuLayers)
+	} else {
+		acceleration = config.LocalAcceleration
+		gpuLayers = config.LocalGPULayers
+		fmt.Printf("Using local settings: acceleration=%s, gpu_layers=%d\n", acceleration, gpuLayers)
+	}
+
 	llamaServerPath := filepath.Join(projectRoot, "infra", "llama", "llama-server")
 	modelPath := filepath.Join(projectRoot, "infra", "models", config.Model)
 	grammarPath := filepath.Join(projectRoot, config.Taxonomy)
 
-	// 1. Initialize DB
-	dbConn, err := db.NewConnection(config.Database)
+	// 1. Initialize DB - prefer DATABASE_URL env var, fall back to config.yml
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		databaseURL = config.Database
+	}
+	dbConn, err := db.NewConnection(databaseURL)
 	if err != nil {
 		panic(err)
 	}
 
-	// 2. Initialize Redis
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-	})
+	// 2. Initialize Redis - prefer REDIS_URL env var, fall back to localhost
+	redisURL := os.Getenv("REDIS_URL")
+	if redisURL == "" {
+		redisURL = "redis://localhost:6379/0"
+	}
+
+	// Parse Redis URL using the redis library's built-in parser
+	rdbOpts, err := redis.ParseURL(redisURL)
+	if err != nil {
+		// Fallback: parse manually if ParseURL fails
+		parsedURL, parseErr := url.Parse(redisURL)
+		if parseErr != nil || parsedURL.Host == "" {
+			// Last resort: use localhost
+			rdbOpts = &redis.Options{
+				Addr: "localhost:6379",
+			}
+		} else {
+			redisDB := 0
+			if parsedURL.Path != "" {
+				dbStr := strings.TrimPrefix(parsedURL.Path, "/")
+				if dbStr != "" {
+					// Try to parse DB number from path
+					if dbNum, parseDBErr := strconv.Atoi(dbStr); parseDBErr == nil {
+						redisDB = dbNum
+					}
+				}
+			}
+			rdbOpts = &redis.Options{
+				Addr: parsedURL.Host,
+				DB:   redisDB,
+			}
+		}
+	}
+
+	rdb := redis.NewClient(rdbOpts)
 
 	// 3. Initialize AI
-	aiEngine, err := ai.NewEngine(llamaServerPath, modelPath, grammarPath, config.Acceleration, config.GPULayers)
+	aiEngine, err := ai.NewEngine(llamaServerPath, modelPath, grammarPath, acceleration, gpuLayers)
 	if err != nil {
 		panic(err)
 	}

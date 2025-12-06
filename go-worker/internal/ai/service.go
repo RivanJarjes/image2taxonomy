@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"time"
 
 	"github.com/rivanjarjes/image2taxonomy/worker/internal/image"
@@ -76,9 +77,14 @@ func NewEngine(llamaServerPath string, modelPath string, grammarPath string, acc
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	// Set DYLD_LIBRARY_PATH to point to infra directory where dylib files are located
+	// Set library path based on OS
+	// macOS uses DYLD_LIBRARY_PATH, Linux uses LD_LIBRARY_PATH
 	llamaBasePath := filepath.Dir(llamaServerPath)
+	if runtime.GOOS == "darwin" {
 	cmd.Env = append(os.Environ(), fmt.Sprintf("DYLD_LIBRARY_PATH=%s", llamaBasePath))
+	} else {
+		cmd.Env = append(os.Environ(), fmt.Sprintf("LD_LIBRARY_PATH=%s", llamaBasePath))
+	}
 
 	fmt.Println("Starting llama server...")
 	if err := cmd.Start(); err != nil {

@@ -14,8 +14,14 @@ services:
       RAILS_ENV: production
       RAILS_LOG_TO_STDOUT: "true"
       DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/image2taxonomy"
+      DB_HOST: postgres
+      DB_NAME: image2taxonomy
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      PGHOST: postgres
+      PGPORT: "5432"
       REDIS_URL: "redis://redis:6379/1"
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-development-key-change-in-production}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-8f3c2b1a4d5e6f708192a3b4c5d6e7f8}
     ports:
       - "3000:80"
     depends_on:
@@ -37,6 +43,10 @@ services:
     container_name: image2taxonomy-worker
     environment:
       DATABASE_URL: "postgres://postgres:postgres@postgres:5432/image2taxonomy"
+      DB_HOST: postgres
+      DB_NAME: image2taxonomy
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
       REDIS_URL: "redis://redis:6379/0"
       GOLANG_ENV: "production"
     depends_on:
@@ -47,8 +57,8 @@ services:
     volumes:
       # Mount the config file
       - ./config.yml:/app/config.yml:ro
-      # Mount infra resources (llama-server, models, taxonomy)
-      - ./infra/llama:/app/infra/llama:ro
+      # Mount infra resources (models, taxonomy)
+      # Note: llama-server is built inside the container, not mounted
       - ./infra/models:/app/infra/models:ro
       - ./docs:/app/docs:ro
     networks:

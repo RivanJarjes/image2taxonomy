@@ -15,15 +15,6 @@ services:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-development-key-change-in-production}
     ports:
       - "3000:80"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    volumes:
-      - rails_storage:/rails/storage
-    networks:
-      - image2taxonomy
     restart: unless-stopped
 
   # Go Worker Service
@@ -36,11 +27,6 @@ services:
       DATABASE_URL: "postgres://postgres:postgres@postgres:5432/image2taxonomy"
       REDIS_URL: "redis://redis:6379/0"
       GOLANG_ENV: "production"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     volumes:
       # Mount the config file
       - ./config.yml:/app/config.yml:ro
@@ -48,68 +34,4 @@ services:
       - ./infra/llama:/app/infra/llama:ro
       - ./infra/models:/app/infra/models:ro
       - ./docs:/app/docs:ro
-    networks:
-      - image2taxonomy
     restart: unless-stopped
-
-  # PostgreSQL Database
-  postgres:
-    image: postgres:16-alpine
-    container_name: image2taxonomy-postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - image2taxonomy
-
-  # Redis Queue
-  redis:
-    image: redis:7-alpine
-    container_name: image2taxonomy-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - image2taxonomy
-
-  # PgAdmin for database management
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: image2taxonomy-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - image2taxonomy
-
-volumes:
-  postgres_data:
-  redis_data:
-  rails_storage:
-
-networks:
-  image2taxonomy:
-    driver: bridge
-
