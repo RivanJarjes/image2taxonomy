@@ -1,5 +1,3 @@
-version: '3.8'
-
 include:
   - infra/docker-compose.yml
 
@@ -38,8 +36,8 @@ services:
   # Go Worker Service
   go-worker:
     build:
-      context: ./go-worker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: go-worker/Dockerfile
     container_name: image2taxonomy-worker
     environment:
       DATABASE_URL: "postgres://postgres:postgres@postgres:5432/image2taxonomy"
