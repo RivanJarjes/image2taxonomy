@@ -2,7 +2,7 @@
 
 https://github.com/user-attachments/assets/56c7f036-6961-4d4c-ae0e-16d589d334b2
 
-Image2Taxonomy is a high-performance polyglot microservice built to automate the e-commerce product classification problem. It uses a Ruby on Rails frontend to manage uploads and orchestrate asynchronous analysis jobs processed by a dedicated Go service running a constrained Multimodal LLM (Qwen-VL) on optimized hardware. The system enforces the official Shopify Product Taxonomy via GBNF Grammars that's automatically updated and generated thru the Go program.
+Image2Taxonomy is a microservice built to automate the e-commerce product classification problem. It uses a Ruby on Rails frontend to manage uploads and orchestrate asynchronous analysis jobs processed by a dedicated Go service running a constrained Multimodal LLM (Qwen-VL) on optimized hardware. The system enforces the official Shopify Product Taxonomy via GBNF Grammars that's automatically updated and generated thru the Go program.
 
 ## Prerequisites
 
